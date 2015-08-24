@@ -3,22 +3,14 @@ baseFiles.each do |file|
   if !(file.include? '.')
     innerFolder = Dir.entries("#{ARGV[0]}/#{file}")
     baseFiles << innerFolder
-    innerFolder.each do |f|
-      if !(f.include? '.')
-        baseFiles << Dir.entries("#{ARGV[0]}/#{file}/#{f}")
-      end
-    end
+    innerFolder.each {|f| baseFiles << Dir.entries("#{ARGV[0]}/#{file}/#{f}") if !(f.include? '.')}
   end
 end
 
 files = baseFiles.flatten.select { |file| (file.include? '.zip') || (file.include? '.rar') }
 
 otherFiles = Dir.entries(ARGV[1])
-otherFiles.each do |file|
-  if !(file.include? '.')
-    otherFiles << Dir.entries("#{ARGV[1]}/#{file}")
-  end
-end
+otherFiles.each {|file| otherFiles << Dir.entries("#{ARGV[1]}/#{file}") if !(file.include? '.')}
 
 files.each do |file|
   missing = true
@@ -28,7 +20,5 @@ files.each do |file|
       break
     end
   end
-  if missing
-    puts "#{file} is missing"
-  end
+  puts "#{file} is missing" if missing
 end
