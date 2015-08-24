@@ -1,22 +1,23 @@
-baseFiles = Dir.entries('base')
+
+baseFiles = Dir.entries(ARGV[0])
 baseFiles.each do |file|
   if !(file.include? '.')
-    innerFolder = Dir.entries("base/#{file}")
+    innerFolder = Dir.entries("#{ARGV[0]}/#{file}")
     baseFiles << innerFolder
     innerFolder.each do |f|
       if !(f.include? '.')
-        baseFiles << Dir.entries("base/#{file}/#{f}")
+        baseFiles << Dir.entries("#{ARGV[0]}/#{file}/#{f}")
       end
     end
   end
 end
 
-files = baseFiles.flatten.select {|file| (file.include? '.zip') || (file.include? '.rar') }
+files = baseFiles.flatten.select { |file| (file.include? '.zip') || (file.include? '.rar') }
 
-otherFiles = Dir.entries('other')
+otherFiles = Dir.entries(ARGV[1])
 otherFiles.each do |file|
   if !(file.include? '.')
-    otherFiles << Dir.entries("other/#{file}")
+    otherFiles << Dir.entries("#{ARGV[1]}/#{file}")
   end
 end
 otherFiles
