@@ -1,4 +1,3 @@
-
 baseFiles = Dir.entries(ARGV[0])
 baseFiles.each do |file|
   if !(file.include? '.')
@@ -20,7 +19,7 @@ otherFiles.each do |file|
     otherFiles << Dir.entries("#{ARGV[1]}/#{file}")
   end
 end
-otherFiles
+
 files.each do |file|
   missing = true
   otherFiles.flatten.each do |f|
